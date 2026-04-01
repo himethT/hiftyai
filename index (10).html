@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hifty AI — AI Safety Detection for Construction & Manufacturing</title>
+<meta name="description" content="Hifty AI delivers custom AI models for real-time safety detection on construction sites and manufacturing floors. PPE detection, hazard alerts, fully local — your data never leaves your system.">
+<meta name="keywords" content="AI safety detection, construction site AI, manufacturing AI, PPE detection, hazard detection, local AI model, on-premise AI, workplace safety AI">
+<meta property="og:title" content="Hifty AI — AI Safety Detection">
+<meta property="og:description" content="Real-time AI safety detection for construction & manufacturing. Custom models. 100% local. Zero data leaks.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --off-black: #111214;
+    --panel: #161819;
+    --border: rgba(255,255,255,0.07);
+    --border-bright: rgba(255,255,255,0.14);
+    --text: #e8e6e1;
+    --muted: #888580;
+    --orange: #f5620a;
+    --orange-dim: rgba(245,98,10,0.12);
+    --orange-glow: rgba(245,98,10,0.25);
+    --green: #22c55e;
+    --green-dim: rgba(34,197,94,0.10);
+    --yellow: #f5c518;
+    --white: #ffffff;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+    overflow-x: hidden;
+  }
+  h1,h2,h3,h4 { font-family: 'Syne', sans-serif; line-height: 1.15; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%;
+    height: 68px;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 22px;
+    color: var(--white);
+    text-decoration: none;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .logo-badge {
+    width: 32px; height: 32px;
+    background: var(--orange);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 800; color: #fff;
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none;
+    font-size: 14px; font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+  .nav-cta {
+    background: var(--orange); color: #fff;
+    padding: 9px 20px; border-radius: 8px;
+    font-size: 14px; font-weight: 600;
+    text-decoration: none;
+    transition: opacity 0.2s;
+    font-family: 'Syne', sans-serif;
+  }
+  .nav-cta:hover { opacity: 0.85; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    text-align: center;
+    padding: 120px 5% 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(245,98,10,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245,98,10,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 50%, black 40%, transparent 100%);
+  }
+  .hero-glow {
+    position: absolute;
+    width: 700px; height: 400px;
+    background: radial-gradient(ellipse, rgba(245,98,10,0.15) 0%, transparent 70%);
+    top: 30%; left: 50%; transform: translate(-50%,-50%);
+    pointer-events: none;
+  }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--orange-dim);
+    border: 1px solid rgba(245,98,10,0.3);
+    border-radius: 100px;
+    padding: 6px 16px;
+    font-size: 13px; font-weight: 500; color: var(--orange);
+    margin-bottom: 28px;
+    letter-spacing: 0.03em;
+  }
+  .hero-tag-dot {
+    width: 7px; height: 7px;
+    background: var(--orange);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+  .hero h1 {
+    font-size: clamp(42px, 7vw, 88px);
+    font-weight: 800;
+    color: var(--white);
+    max-width: 900px;
+    margin-bottom: 24px;
+    letter-spacing: -0.02em;
+  }
+  .hero h1 span { color: var(--orange); }
+  .hero-sub {
+    font-size: clamp(16px, 2vw, 20px);
+    color: var(--muted);
+    max-width: 620px;
+    margin-bottom: 48px;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+  .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+  .btn-primary {
+    background: var(--orange); color: #fff;
+    padding: 14px 32px; border-radius: 10px;
+    font-size: 16px; font-weight: 600;
+    text-decoration: none;
+    font-family: 'Syne', sans-serif;
+    transition: all 0.2s;
+    border: none; cursor: pointer;
+  }
+  .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+  .btn-secondary {
+    background: transparent; color: var(--text);
+    padding: 14px 32px; border-radius: 10px;
+    font-size: 16px; font-weight: 500;
+    text-decoration: none;
+    border: 1px solid var(--border-bright);
+    transition: all 0.2s;
+    font-family: 'Syne', sans-serif;
+  }
+  .btn-secondary:hover { border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.04); }
+
+  .hero-stats {
+    display: flex; gap: 48px;
+    margin-top: 64px;
+    padding-top: 48px;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap; justify-content: center;
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Syne', sans-serif;
+    font-size: 36px; font-weight: 800;
+    color: var(--white);
+  }
+  .stat-num span { color: var(--orange); }
+  .stat-label { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+  /* SECTIONS */
+  section { padding: 100px 5%; }
+  .section-tag {
+    display: inline-block;
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-size: clamp(30px, 4vw, 48px);
+    font-weight: 800; color: var(--white);
+    max-width: 680px;
+    letter-spacing: -0.02em;
+  }
+  .section-title span { color: var(--orange); }
+  .section-sub {
+    font-size: 17px; color: var(--muted);
+    max-width: 560px; margin-top: 16px;
+    font-weight: 300; line-height: 1.7;
+  }
+  .center { text-align: center; margin: 0 auto; }
+  .section-sub.center { margin: 16px auto 0; }
+
+  /* PROBLEMS */
+  .problems { background: var(--off-black); }
+  .problems-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-top: 56px;
+  }
+  .problem-card {
+    background: var(--panel);
+    padding: 36px 32px;
+    transition: background 0.2s;
+  }
+  .problem-card:hover { background: #1a1c1e; }
+  .problem-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    background: var(--orange-dim);
+    border: 1px solid rgba(245,98,10,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; margin-bottom: 20px;
+  }
+  .problem-card h3 {
+    font-size: 18px; font-weight: 700; color: var(--white);
+    margin-bottom: 10px;
+  }
+  .problem-card p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+
+  /* DETECTION FEATURES */
+  .detection-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+    margin-top: 64px;
+  }
+  .detection-list { display: flex; flex-direction: column; gap: 16px; }
+  .detect-item {
+    display: flex; gap: 16px; align-items: flex-start;
+    padding: 20px 24px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    transition: border-color 0.2s, background 0.2s;
+    cursor: default;
+  }
+  .detect-item:hover {
+    border-color: rgba(245,98,10,0.3);
+    background: #161a1c;
+  }
+  .detect-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--green);
+    margin-top: 5px; flex-shrink: 0;
+    box-shadow: 0 0 8px rgba(34,197,94,0.5);
+  }
+  .detect-dot.orange { background: var(--orange); box-shadow: 0 0 8px rgba(245,98,10,0.5); }
+  .detect-dot.yellow { background: var(--yellow); box-shadow: 0 0 8px rgba(245,197,24,0.5); }
+  .detect-item h4 { font-size: 15px; font-weight: 600; color: var(--white); margin-bottom: 4px; }
+  .detect-item p { font-size: 13px; color: var(--muted); }
+
+  .detection-visual {
+    position: relative;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    padding: 32px;
+  }
+  .cam-feed {
+    background: #0d1117;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    aspect-ratio: 4/3;
+    position: relative;
+    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .cam-grid-bg {
+    position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(245,98,10,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245,98,10,0.03) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+  .detection-box {
+    position: absolute;
+    border: 2px solid var(--green);
+    border-radius: 4px;
+  }
+  .db1 { top: 15%; left: 20%; width: 22%; height: 40%; border-color: var(--green); }
+  .db2 { top: 20%; left: 52%; width: 20%; height: 38%; border-color: var(--green); }
+  .db3 { top: 60%; left: 35%; width: 28%; height: 25%; border-color: var(--orange); }
+  .db-label {
+    position: absolute; top: -22px; left: 0;
+    background: var(--green);
+    color: #000; font-size: 9px; font-weight: 700;
+    padding: 2px 6px; border-radius: 3px;
+    white-space: nowrap;
+  }
+  .db3 .db-label { background: var(--orange); top: -22px; }
+  .cam-corner {
+    position: absolute; width: 16px; height: 16px;
+    border-color: rgba(245,98,10,0.4);
+    border-style: solid;
+  }
+  .cam-corner.tl { top: 8px; left: 8px; border-width: 2px 0 0 2px; }
+  .cam-corner.tr { top: 8px; right: 8px; border-width: 2px 2px 0 0; }
+  .cam-corner.bl { bottom: 8px; left: 8px; border-width: 0 0 2px 2px; }
+  .cam-corner.br { bottom: 8px; right: 8px; border-width: 0 2px 2px 0; }
+  .cam-status {
+    position: absolute; top: 10px; right: 40px;
+    display: flex; align-items: center; gap: 6px;
+    font-size: 10px; color: var(--green); font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+  .cam-rec { width: 7px; height: 7px; background: #ef4444; border-radius: 50%; animation: pulse 1.2s infinite; }
+  .alert-bar {
+    margin-top: 16px;
+    background: rgba(245,98,10,0.1);
+    border: 1px solid rgba(245,98,10,0.3);
+    border-radius: 8px;
+    padding: 10px 14px;
+    display: flex; align-items: center; gap: 10px;
+    font-size: 12px;
+  }
+  .alert-icon { font-size: 16px; }
+  .alert-text { color: var(--orange); font-weight: 500; }
+  .alert-time { color: var(--muted); font-size: 11px; margin-left: auto; }
+
+  /* LOCAL AI SECTION */
+  .local-section { background: var(--off-black); }
+  .local-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 56px;
+  }
+  .local-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 36px 32px;
+    transition: border-color 0.2s;
+  }
+  .local-card:hover { border-color: var(--border-bright); }
+  .local-card.highlight {
+    border-color: rgba(245,98,10,0.3);
+    background: linear-gradient(135deg, #161819 0%, #1a1008 100%);
+  }
+  .local-card h3 {
+    font-size: 22px; font-weight: 700; color: var(--white);
+    margin-bottom: 12px; margin-top: 16px;
+  }
+  .local-card p { font-size: 14px; color: var(--muted); line-height: 1.8; }
+  .badge-big {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--green-dim);
+    border: 1px solid rgba(34,197,94,0.25);
+    color: var(--green);
+    padding: 6px 14px; border-radius: 100px;
+    font-size: 12px; font-weight: 600;
+  }
+  .badge-big.orange {
+    background: var(--orange-dim);
+    border-color: rgba(245,98,10,0.25);
+    color: var(--orange);
+  }
+
+  /* HOW IT WORKS */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0;
+    margin-top: 64px;
+    position: relative;
+  }
+  .steps::before {
+    content: '';
+    position: absolute;
+    top: 36px; left: 10%; right: 10%; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border-bright), transparent);
+  }
+  .step { text-align: center; padding: 0 24px; }
+  .step-num {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-size: 22px; font-weight: 800; color: var(--orange);
+    margin: 0 auto 20px;
+  }
+  .step h3 { font-size: 17px; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+  .step p { font-size: 13px; color: var(--muted); }
+
+  /* INDUSTRIES */
+  .industries-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-top: 56px;
+  }
+  .industry-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px 24px;
+    text-align: center;
+    transition: all 0.2s;
+    cursor: default;
+  }
+  .industry-card:hover {
+    border-color: rgba(245,98,10,0.35);
+    transform: translateY(-3px);
+  }
+  .ind-icon { font-size: 36px; margin-bottom: 14px; display: block; }
+  .industry-card h3 { font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+  .industry-card p { font-size: 12px; color: var(--muted); }
+
+  /* PRICING */
+  .pricing { background: var(--off-black); }
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+    margin-top: 56px;
+    max-width: 900px; margin-left: auto; margin-right: auto;
+  }
+  .price-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 40px 32px;
+    position: relative;
+    transition: border-color 0.2s;
+  }
+  .price-card:hover { border-color: var(--border-bright); }
+  .price-card.featured {
+    border-color: var(--orange);
+    background: linear-gradient(160deg, #1a1008 0%, var(--panel) 60%);
+  }
+  .featured-badge {
+    position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+    background: var(--orange);
+    color: #fff; font-size: 11px; font-weight: 700;
+    padding: 4px 16px; border-radius: 100px;
+    letter-spacing: 0.05em; white-space: nowrap;
+    font-family: 'Syne', sans-serif;
+  }
+  .price-name { font-size: 13px; font-weight: 600; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; }
+  .price-amount { font-family: 'Syne', sans-serif; font-size: 42px; font-weight: 800; color: var(--white); }
+  .price-amount span { font-size: 18px; color: var(--muted); }
+  .price-desc { font-size: 13px; color: var(--muted); margin-top: 8px; margin-bottom: 28px; }
+  .price-features { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+  .price-features li { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; color: var(--text); }
+  .price-features li::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; }
+  .price-features li.no::before { content: '—'; color: var(--muted); }
+  .price-features li.no { color: var(--muted); }
+
+  /* FREE TRIAL */
+  .trial-section {
+    text-align: center;
+    background: linear-gradient(180deg, var(--off-black) 0%, #0f0a06 100%);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .trial-box {
+    max-width: 640px; margin: 0 auto;
+    background: var(--panel);
+    border: 1px solid rgba(245,98,10,0.3);
+    border-radius: 24px;
+    padding: 56px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+  .trial-glow {
+    position: absolute; bottom: -100px; left: 50%; transform: translateX(-50%);
+    width: 400px; height: 200px;
+    background: radial-gradient(ellipse, rgba(245,98,10,0.2) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .trial-box h2 { font-size: 36px; font-weight: 800; color: var(--white); margin-bottom: 16px; }
+  .trial-box h2 span { color: var(--orange); }
+  .trial-box p { color: var(--muted); margin-bottom: 36px; font-size: 16px; }
+  .trial-steps {
+    display: flex; gap: 24px; justify-content: center;
+    margin-bottom: 36px; flex-wrap: wrap;
+  }
+  .trial-step {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; color: var(--text);
+  }
+  .trial-step-num {
+    width: 24px; height: 24px;
+    background: var(--orange); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; color: #fff;
+    flex-shrink: 0;
+  }
+
+  /* CONTACT */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+    margin-top: 56px;
+  }
+  .contact-info { display: flex; flex-direction: column; gap: 20px; }
+  .contact-item {
+    display: flex; gap: 16px;
+    padding: 20px 24px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    align-items: center;
+    transition: border-color 0.2s;
+  }
+  .contact-item:hover { border-color: rgba(245,98,10,0.3); }
+  .contact-icon {
+    width: 44px; height: 44px;
+    background: var(--orange-dim);
+    border: 1px solid rgba(245,98,10,0.2);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; flex-shrink: 0;
+  }
+  .contact-item h4 { font-size: 13px; color: var(--muted); margin-bottom: 4px; }
+  .contact-item a, .contact-item p {
+    font-size: 15px; color: var(--white); font-weight: 500;
+    text-decoration: none;
+  }
+  .contact-item a:hover { color: var(--orange); }
+  .worldwide-badge {
+    background: var(--green-dim);
+    border: 1px solid rgba(34,197,94,0.2);
+    border-radius: 12px;
+    padding: 20px 24px;
+    display: flex; gap: 12px; align-items: center;
+  }
+  .worldwide-badge p { font-size: 14px; color: var(--green); font-weight: 500; }
+  .contact-form { display: flex; flex-direction: column; gap: 16px; }
+  .form-group { display: flex; flex-direction: column; gap: 8px; }
+  .form-label { font-size: 13px; font-weight: 500; color: var(--muted); }
+  .form-input, .form-select, .form-textarea {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 16px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    transition: border-color 0.2s;
+    outline: none;
+    width: 100%;
+  }
+  .form-input:focus, .form-select:focus, .form-textarea:focus {
+    border-color: rgba(245,98,10,0.5);
+  }
+  .form-select { appearance: none; cursor: pointer; }
+  .form-textarea { resize: vertical; min-height: 120px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  /* FOOTER */
+  footer {
+    background: var(--off-black);
+    border-top: 1px solid var(--border);
+    padding: 56px 5% 32px;
+  }
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid var(--border);
+  }
+  .footer-brand p { color: var(--muted); font-size: 14px; margin-top: 16px; max-width: 260px; line-height: 1.7; }
+  .footer-col h4 { font-size: 13px; font-weight: 700; color: var(--white); margin-bottom: 16px; letter-spacing: 0.05em; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col ul a { color: var(--muted); text-decoration: none; font-size: 14px; transition: color 0.2s; }
+  .footer-col ul a:hover { color: var(--text); }
+  .footer-bottom {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 32px; flex-wrap: wrap; gap: 16px;
+  }
+  .footer-bottom p { font-size: 13px; color: var(--muted); }
+  .footer-seo { font-size: 12px; color: #3a3835; max-width: 100%; margin-top: 8px; }
+
+  /* ANIMATIONS */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--black); }
+  ::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 3px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .detection-wrap, .local-grid, .contact-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    .nav-links { display: none; }
+    .steps::before { display: none; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
+    .footer-top { grid-template-columns: 1fr; }
+    .hero-stats { gap: 28px; }
+    .pricing-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Notification popup animation */
+  .notif-popup {
+    position: absolute; top: 12px; right: 12px;
+    background: var(--panel);
+    border: 1px solid rgba(245,98,10,0.4);
+    border-radius: 10px;
+    padding: 10px 14px;
+    max-width: 200px;
+    animation: slideIn 0.4s ease forwards;
+    font-size: 11px;
+  }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(20px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .notif-title { color: var(--orange); font-weight: 600; margin-bottom: 2px; }
+  .notif-body { color: var(--muted); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="logo-badge">H</div>
+    Hifty AI
+  </a>
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#industries">Industries</a></li>
+    <li><a href="#local-ai">Local AI</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Get Free Trial</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+
+  <div class="hero-tag">
+    <div class="hero-tag-dot"></div>
+    AI Safety Detection — Construction &amp; Manufacturing
+  </div>
+
+  <h1>Protect Your Workers With <span>AI-Powered</span> Safety Detection</h1>
+
+  <p class="hero-sub">
+    Hifty AI builds custom AI models that detect PPE violations, safety hazards, and risks in real time — sending instant alerts before accidents happen. Runs fully on your system. Your data never leaves.
+  </p>
+
+  <div class="hero-btns">
+    <a href="#contact" class="btn-primary">Start Free Trial</a>
+    <a href="#features" class="btn-secondary">See How It Works</a>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">99<span>%</span></div>
+      <div class="stat-label">Detection accuracy</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">&lt;1<span>s</span></div>
+      <div class="stat-label">Alert response time</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">100<span>%</span></div>
+      <div class="stat-label">Data stays on your server</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">24<span>/7</span></div>
+      <div class="stat-label">Continuous monitoring</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEMS -->
+<section class="problems" id="features">
+  <div class="section-tag">Why Hifty AI</div>
+  <h2 class="section-title">Safety risks that cost lives — and money</h2>
+  <p class="section-sub">Every day without AI safety monitoring is a day of unnecessary risk for your workers and business.</p>
+
+  <div class="problems-grid fade-in">
+    <div class="problem-card">
+      <div class="problem-icon">⛑</div>
+      <h3>PPE Violations Missed</h3>
+      <p>Supervisors can't watch every worker simultaneously. Helmets, vests, gloves and masks are removed and nobody catches it until it's too late.</p>
+    </div>
+    <div class="problem-card">
+      <div class="problem-icon">⚠️</div>
+      <h3>Hazard Zones Breached</h3>
+      <p>Restricted areas are entered without authorisation. Heavy machinery operates near unprotected workers. Danger zones are invisible without AI eyes.</p>
+    </div>
+    <div class="problem-card">
+      <div class="problem-icon">📋</div>
+      <h3>Compliance Failures</h3>
+      <p>Manual safety audits are slow, inaccurate and expensive. Regulatory fines and lawsuits from workplace accidents can shut down operations entirely.</p>
+    </div>
+    <div class="problem-card">
+      <div class="problem-icon">📡</div>
+      <h3>No Real-Time Alerts</h3>
+      <p>By the time a safety issue is noticed by a human, the accident has already happened. You need instant, automated notifications the moment a risk appears.</p>
+    </div>
+  </div>
+</section>
+
+<!-- DETECTION FEATURES -->
+<section style="padding: 100px 5%;" id="detection">
+  <div class="section-tag">What We Detect</div>
+  <h2 class="section-title">Real-time AI detection for every safety scenario</h2>
+  <p class="section-sub">Our custom AI models are trained specifically on your environment and industry — not generic off-the-shelf software.</p>
+
+  <div class="detection-wrap fade-in">
+    <div class="detection-list">
+      <div class="detect-item">
+        <div class="detect-dot"></div>
+        <div>
+          <h4>PPE Detection</h4>
+          <p>Hard hats, high-vis vests, safety gloves, goggles, masks, steel-toe boots — detects when any item is missing from any worker.</p>
+        </div>
+      </div>
+      <div class="detect-item">
+        <div class="detect-dot orange"></div>
+        <div>
+          <h4>Restricted Zone Breach</h4>
+          <p>Automatically flags any person entering a hazard zone, machine exclusion zone, or authorised-only area.</p>
+        </div>
+      </div>
+      <div class="detect-item">
+        <div class="detect-dot yellow"></div>
+        <div>
+          <h4>Fire &amp; Smoke Detection</h4>
+          <p>Early-stage fire and smoke detected through camera feeds before manual detection, triggering immediate site alerts.</p>
+        </div>
+      </div>
+      <div class="detect-item">
+        <div class="detect-dot orange"></div>
+        <div>
+          <h4>Worker Fall Detection</h4>
+          <p>AI identifies abnormal posture or fall events in real time, triggering emergency alert to supervisors immediately.</p>
+        </div>
+      </div>
+      <div class="detect-item">
+        <div class="detect-dot"></div>
+        <div>
+          <h4>Crowd &amp; Overcrowding Alerts</h4>
+          <p>Detects dangerous crowding near machinery or in confined spaces, sending alerts before accidents occur.</p>
+        </div>
+      </div>
+      <div class="detect-item">
+        <div class="detect-dot"></div>
+        <div>
+          <h4>Vehicle &amp; Pedestrian Conflict</h4>
+          <p>Monitors proximity between forklifts, vehicles and workers — alerts when unsafe distances are reached.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="detection-visual">
+      <p style="font-size: 11px; color: var(--muted); margin-bottom: 12px; letter-spacing: 0.08em; text-transform: uppercase;">Live Detection Preview</p>
+      <div class="cam-feed">
+        <div class="cam-grid-bg"></div>
+        <div class="cam-corner tl"></div>
+        <div class="cam-corner tr"></div>
+        <div class="cam-corner bl"></div>
+        <div class="cam-corner br"></div>
+        <div class="cam-status">
+          <div class="cam-rec"></div>
+          LIVE
+        </div>
+
+        <!-- Detection boxes -->
+        <div class="detection-box db1">
+          <div class="db-label">WORKER — PPE OK ✓</div>
+        </div>
+        <div class="detection-box db2">
+          <div class="db-label">WORKER — PPE OK ✓</div>
+        </div>
+        <div class="detection-box db3" style="border-color: var(--orange);">
+          <div class="db-label" style="background: var(--orange);">⚠ NO HELMET DETECTED</div>
+        </div>
+
+        <!-- Notification popup -->
+        <div class="notif-popup">
+          <div class="notif-title">🚨 Safety Alert</div>
+          <div class="notif-body">Zone A — Worker missing hard hat. Supervisor notified.</div>
+        </div>
+      </div>
+
+      <div class="alert-bar">
+        <span class="alert-icon">🔔</span>
+        <span class="alert-text">Alert sent to site supervisor — SMS + App</span>
+        <span class="alert-time">Just now</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOCAL AI -->
+<section class="local-section" id="local-ai">
+  <div class="section-tag">100% Local Deployment</div>
+  <h2 class="section-title">Your AI. Your server. <span>Zero data leaves.</span></h2>
+  <p class="section-sub">Unlike cloud-based tools, Hifty AI models run entirely inside your own network. No internet needed. No third-party servers. Complete data ownership.</p>
+
+  <div class="local-grid fade-in">
+    <div class="local-card highlight">
+      <div class="badge-big orange">⚡ On-Premise AI</div>
+      <h3>Runs Completely Offline</h3>
+      <p>Once installed, the entire AI model runs on your own hardware — no internet connection required. Camera feeds are processed locally, nothing is uploaded anywhere. Perfect for sensitive sites, government facilities, or any operation where data privacy is critical.</p>
+    </div>
+    <div class="local-card">
+      <div class="badge-big">🔒 Zero Data Leakage</div>
+      <h3>Your data is yours</h3>
+      <p>All footage, detection logs, and reports stay entirely within your company's infrastructure. No cloud storage. No third-party access. No subscription to external AI APIs that could change pricing or go offline.</p>
+    </div>
+    <div class="local-card">
+      <div class="badge-big">🛠 Custom-Built for You</div>
+      <h3>Trained on your environment</h3>
+      <p>We train the AI model specifically on your construction site or factory floor. The model learns your specific workers, uniforms, equipment, and hazard zones — far more accurate than a generic solution.</p>
+    </div>
+    <div class="local-card">
+      <div class="badge-big orange">🌐 Any Platform</div>
+      <h3>Works on any system</h3>
+      <p>Tell us what platform you use — Windows servers, Linux, industrial edge hardware, IP cameras, CCTV systems — we build the AI to run on your existing infrastructure. No need to replace your current setup.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section style="padding: 100px 5%;" id="how">
+  <div class="section-tag fade-in">How It Works</div>
+  <h2 class="section-title center fade-in">From zero to AI-protected in days</h2>
+
+  <div class="steps fade-in">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h3>Tell us your needs</h3>
+      <p>Contact us and describe your site, industry, and what safety risks you need to detect.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h3>Free trial setup</h3>
+      <p>We install a trial system on your site at no cost. You see real results before paying anything.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h3>We train the AI</h3>
+      <p>Our team trains a custom AI model on your specific environment, equipment, and safety rules.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <h3>Deploy locally</h3>
+      <p>The model is installed directly on your servers. No cloud, no internet dependency, no data transfer.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <h3>Monitor and alert</h3>
+      <p>Go live with 24/7 AI monitoring, instant alerts via SMS, email, or app — fully automated.</p>
+    </div>
+  </div>
+</section>
+
+<!-- INDUSTRIES -->
+<section style="padding: 100px 5%; background: var(--off-black);" id="industries">
+  <div class="section-tag">Industries We Serve</div>
+  <h2 class="section-title">Built for high-risk industries worldwide</h2>
+
+  <div class="industries-grid fade-in">
+    <div class="industry-card">
+      <span class="ind-icon">🏗</span>
+      <h3>Construction Sites</h3>
+      <p>PPE, fall detection, machinery zones, scaffolding risks</p>
+    </div>
+    <div class="industry-card">
+      <span class="ind-icon">🏭</span>
+      <h3>Manufacturing Plants</h3>
+      <p>Machine guarding, hazardous areas, worker proximity</p>
+    </div>
+    <div class="industry-card">
+      <span class="ind-icon">⚗️</span>
+      <h3>Chemical &amp; Industrial</h3>
+      <p>Spill detection, gas hazards, protective equipment</p>
+    </div>
+    <div class="industry-card">
+      <span class="ind-icon">🚢</span>
+      <h3>Ports &amp; Logistics</h3>
+      <p>Crane zones, forklift safety, loading dock monitoring</p>
+    </div>
+    <div class="industry-card">
+      <span class="ind-icon">⛏</span>
+      <h3>Mining Operations</h3>
+      <p>Underground safety, blast zones, equipment detection</p>
+    </div>
+    <div class="industry-card">
+      <span class="ind-icon">⚡</span>
+      <h3>Utilities &amp; Energy</h3>
+      <p>Electrical safety, confined space, high-voltage zones</p>
+    </div>
+    <div class="industry-card">
+      <span class="ind-icon">🏥</span>
+      <h3>Hospitals &amp; Facilities</h3>
+      <p>Hygiene compliance, patient fall detection, access control</p>
+    </div>
+    <div class="industry-card">
+      <span class="ind-icon">🌾</span>
+      <h3>Agriculture &amp; Food</h3>
+      <p>Hygiene monitoring, equipment safety, cold room detection</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="section-tag center" style="display: block; text-align: center;">Pricing</div>
+  <h2 class="section-title center" style="margin: 0 auto;">Affordable AI safety for every company</h2>
+  <p class="section-sub center">No hidden fees. No data leaving your system. Try free before you pay anything.</p>
+
+  <div class="pricing-grid fade-in">
+    <div class="price-card">
+      <div class="price-name">Starter</div>
+      <div class="price-amount"><span>From </span>Custom</div>
+      <div class="price-desc">For small sites up to 10 cameras</div>
+      <ul class="price-features">
+        <li>PPE detection (helmet, vest)</li>
+        <li>Up to 10 camera feeds</li>
+        <li>SMS + email alerts</li>
+        <li>Local deployment</li>
+        <li>7-day free trial</li>
+        <li class="no">Custom model training</li>
+        <li class="no">Multi-site support</li>
+      </ul>
+      <a href="#contact" class="btn-secondary" style="display: block; text-align: center;">Get Quote</a>
+    </div>
+
+    <div class="price-card featured">
+      <div class="featured-badge">MOST POPULAR</div>
+      <div class="price-name">Professional</div>
+      <div class="price-amount"><span>From </span>Custom</div>
+      <div class="price-desc">For medium to large sites</div>
+      <ul class="price-features">
+        <li>Full PPE + hazard detection</li>
+        <li>Unlimited camera feeds</li>
+        <li>SMS, email, app alerts</li>
+        <li>100% local deployment</li>
+        <li>Free trial included</li>
+        <li>Custom AI model training</li>
+        <li>Dashboard + reporting</li>
+        <li>Multi-site support</li>
+      </ul>
+      <a href="#contact" class="btn-primary" style="display: block; text-align: center;">Start Free Trial</a>
+    </div>
+
+    <div class="price-card">
+      <div class="price-name">Enterprise</div>
+      <div class="price-amount">Custom</div>
+      <div class="price-desc">For large organisations worldwide</div>
+      <ul class="price-features">
+        <li>Everything in Professional</li>
+        <li>Dedicated AI engineer</li>
+        <li>Custom platform integration</li>
+        <li>Any hardware / OS support</li>
+        <li>Priority support 24/7</li>
+        <li>Full IP ownership</li>
+        <li>On-site deployment team</li>
+      </ul>
+      <a href="#contact" class="btn-secondary" style="display: block; text-align: center;">Contact Us</a>
+    </div>
+  </div>
+</section>
+
+<!-- FREE TRIAL -->
+<section class="trial-section" style="padding: 100px 5%;">
+  <div class="trial-box fade-in">
+    <div class="trial-glow"></div>
+    <h2>Try it <span>free</span> — no risk</h2>
+    <p>We set up a working AI safety demo on your site at no cost. If it detects what you need, you pay. If not, walk away. Simple.</p>
+    <div class="trial-steps">
+      <div class="trial-step">
+        <div class="trial-step-num">1</div>
+        Contact us
+      </div>
+      <div class="trial-step">
+        <div class="trial-step-num">2</div>
+        Free trial setup
+      </div>
+      <div class="trial-step">
+        <div class="trial-step-num">3</div>
+        See real results
+      </div>
+      <div class="trial-step">
+        <div class="trial-step-num">4</div>
+        Pay only if happy
+      </div>
+    </div>
+    <a href="#contact" class="btn-primary">Claim Free Trial Now</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section style="padding: 100px 5%;" id="contact">
+  <div class="section-tag">Contact Us</div>
+  <h2 class="section-title">Let's protect your workforce</h2>
+  <p class="section-sub">Tell us what platform you use, what you need to detect, and we'll build it. Worldwide service. Affordable pricing. Free trial first.</p>
+
+  <div class="contact-grid fade-in">
+    <div>
+      <div class="contact-info">
+        <div class="contact-item">
+          <div class="contact-icon">✉️</div>
+          <div>
+            <h4>Email us</h4>
+            <a href="mailto:himeththewmika@gmail.com">himeththewmika@gmail.com</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📱</div>
+          <div>
+            <h4>WhatsApp / Call</h4>
+            <a href="tel:+6581212507">+65 8121 2507</a>
+          </div>
+        </div>
+        <div class="worldwide-badge">
+          <span style="font-size: 28px;">🌍</span>
+          <p>We serve companies worldwide. Remote setup, on-site deployment, or hybrid — we work to your schedule and location.</p>
+        </div>
+        <div style="background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 24px;">
+          <h4 style="font-size: 15px; color: var(--white); margin-bottom: 12px; font-family: 'Syne', sans-serif;">What to tell us:</h4>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 8px;">
+            <li style="font-size: 13px; color: var(--muted); display: flex; gap: 8px;"><span style="color: var(--orange);">→</span> Your industry (construction, manufacturing, etc.)</li>
+            <li style="font-size: 13px; color: var(--muted); display: flex; gap: 8px;"><span style="color: var(--orange);">→</span> What platform or OS you run</li>
+            <li style="font-size: 13px; color: var(--muted); display: flex; gap: 8px;"><span style="color: var(--orange);">→</span> What safety risks you want detected</li>
+            <li style="font-size: 13px; color: var(--muted); display: flex; gap: 8px;"><span style="color: var(--orange);">→</span> How many cameras or locations</li>
+            <li style="font-size: 13px; color: var(--muted); display: flex; gap: 8px;"><span style="color: var(--orange);">→</span> Whether you need local or hybrid setup</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <form class="contact-form" onsubmit="handleSubmit(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Your name</label>
+          <input class="form-input" type="text" placeholder="John Smith" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Company name</label>
+          <input class="form-input" type="text" placeholder="ACME Construction Ltd" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email address</label>
+        <input class="form-input" type="email" placeholder="you@company.com" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Phone / WhatsApp</label>
+        <input class="form-input" type="tel" placeholder="+1 555 000 0000">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Your industry</label>
+        <select class="form-select form-input">
+          <option value="">Select industry...</option>
+          <option>Construction</option>
+          <option>Manufacturing</option>
+          <option>Chemical / Industrial</option>
+          <option>Mining</option>
+          <option>Ports / Logistics</option>
+          <option>Utilities / Energy</option>
+          <option>Healthcare / Facilities</option>
+          <option>Agriculture / Food</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">What do you need to detect / your requirements</label>
+        <textarea class="form-textarea" placeholder="Tell us about your safety needs — PPE, hazard zones, fall detection, specific equipment... and what platform or system you currently use."></textarea>
+      </div>
+      <button type="submit" class="btn-primary" style="width: 100%; font-size: 16px; padding: 16px;">
+        Send Message &amp; Request Free Trial
+      </button>
+      <p style="font-size: 12px; color: var(--muted); text-align: center;">We reply within 24 hours. Free trial is completely no-obligation.</p>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="#" class="nav-logo" style="font-size: 20px;">
+        <div class="logo-badge">H</div>
+        Hifty AI
+      </a>
+      <p>Custom AI safety detection models for construction, manufacturing and industrial companies worldwide. 100% local deployment — your data never leaves your system.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#features">Safety Detection AI</a></li>
+        <li><a href="#local-ai">Local AI Models</a></li>
+        <li><a href="#detection">PPE Detection</a></li>
+        <li><a href="#how">How It Works</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Industries</h4>
+      <ul>
+        <li><a href="#industries">Construction</a></li>
+        <li><a href="#industries">Manufacturing</a></li>
+        <li><a href="#industries">Mining</a></li>
+        <li><a href="#industries">All Industries</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="mailto:himeththewmika@gmail.com">himeththewmika@gmail.com</a></li>
+        <li><a href="tel:+6581212507">+65 8121 2507</a></li>
+        <li><a href="#contact">Free Trial</a></li>
+        <li><a href="#contact">Get a Quote</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Hifty AI. All rights reserved. Worldwide AI safety solutions.</p>
+    <p style="font-size: 13px; color: var(--muted);">Singapore · Serving clients globally</p>
+  </div>
+  <!-- SEO keywords (hidden, for search indexing) -->
+  <p class="footer-seo">AI safety detection construction site manufacturing PPE detection workplace safety AI on-premise AI model local AI deployment hazard detection worker safety alert system construction AI manufacturing AI custom AI model no cloud data privacy industrial safety AI Singapore worldwide</p>
+</footer>
+
+<script>
+  // Fade-in on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(el => {
+      if (el.isIntersecting) {
+        el.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Form submit
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button[type="submit"]');
+    btn.textContent = '✓ Message sent! We will contact you within 24 hours.';
+    btn.style.background = '#22c55e';
+    btn.disabled = true;
+  }
+
+  // Smooth nav active state
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 120) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--orange)' : '';
+    });
+  });
+</script>
+</body>
+</html>
